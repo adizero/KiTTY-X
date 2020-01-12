@@ -140,7 +140,7 @@ int GetPasteCommandFlag(void) { return PasteCommandFlag ; }
 
 // Flag de gestion de la fonction hyperlink
 #ifdef HYPERLINKPORT
-int HyperlinkFlag = 0 ;
+int HyperlinkFlag = 1 ;
 #else
 int HyperlinkFlag = 0 ;
 #endif

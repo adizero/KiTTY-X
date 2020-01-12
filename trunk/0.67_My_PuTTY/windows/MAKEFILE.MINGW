@@ -108,6 +108,7 @@
 #
 
 # You can define this path to point at your tools if you need to
+TOOLPATH=/usr/bin/i686-w64-mingw32-
 # TOOLPATH = c:\cygwin\bin\ # or similar, if you're running Windows
 # TOOLPATH = /pkg/mingw32msvc/i386-mingw32msvc/bin/
 CC = $(TOOLPATH)gcc
