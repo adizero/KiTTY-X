@@ -125,6 +125,9 @@ UPX = upx
 
 # 		-DPERSOPORT -DCYGTERMPORT -DIMAGEPORT -DRECONNECTPORT -DHYPERLINKPORT -DZMODEMPORT -DSTARTBUTTON -DLAUNCHERPORT -DSAVEDUMPPORT -DKEYMAPPINGPORT -DWINCRYPTPORT -DTUTTYPORT -DPORTKNOCKINGPORT -DPUTTYXPORT -DWTSPORT -DPRINTCLIPPORT -DRUTTYPORT -DADBPORT \
 
+# Extended mouse support (> 223 characters)
+UTF8MOUSE_OBJS = fromucs.o slookup.o sbcsdat.o sbcs.o utf8.o
+
 # Anciens flags: -DIVPORT -DPERFPORT (ne marche pas !!!)
 
 FDJFLAG = FDJ1
@@ -311,7 +314,7 @@ putty.exe: be_all_s.o callback.o cmdline.o conf.o config.o cproxy.o dialog.o \
 		winpgnt_integrated.o winpgen_integrated.o \
 		import.o sshrsag.o sshdssg.o sshprime.o \
 		adb.o kitty.o kitty_commun.o kitty_crypt.o kitty_image.o kitty_registry.o kitty_ssh.o kitty_tools.o kitty_win.o \
-		urlhack.o
+		urlhack.o $(UTF8MOUSE_OBJS)
 	$(CC) -mwindows $(LDFLAGS) -o $@ -Wl,-Map,putty.map be_all_s.o \
 		callback.o cmdline.o conf.o config.o cproxy.o dialog.o \
 		errsock.o ldisc.o ldiscucs.o logging.o minibidi.o misc.o \
@@ -330,7 +333,7 @@ putty.exe: be_all_s.o callback.o cmdline.o conf.o config.o cproxy.o dialog.o \
 		winpgnt_integrated.o winpgen_integrated.o \
 		import.o sshrsag.o sshdssg.o sshprime.o \
 		adb.o kitty.o kitty_commun.o kitty_crypt.o kitty_image.o kitty_registry.o kitty_ssh.o kitty_tools.o kitty_win.o \
-		urlhack.o \
+		urlhack.o $(UTF8MOUSE_OBJS) \
 		../../regex/libregex.a ../../bcrypt/bcrypt.a ../../jpeg/libjpeg.a \
 		../../md5/MD5check.a ../../mini/mini.a ../../blocnote/notepad.a ../../base64/base64.a \
 		-ladvapi32 -lcomctl32 -lcomdlg32 -lgdi32 \
