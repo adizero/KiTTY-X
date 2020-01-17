@@ -2650,15 +2650,15 @@ static void toggle_mode(Terminal *term, int mode, int query, int state)
 	    break;
           case 1000:                   /* xterm mouse 1 (normal) */
             term->xterm_mouse_mode = state ? MM_NORMAL : MM_NONE;
-            win_set_raw_mouse_mode(term->win, state);
+            set_raw_mouse_mode(term->frontend, state);
             break;
           case 1002:                   /* xterm mouse 2 (inc. button drags) */
             term->xterm_mouse_mode = state ? MM_BTN_EVENT : MM_NONE;
-            win_set_raw_mouse_mode(term->win, state);
+            set_raw_mouse_mode(term->frontend, state);
             break;
           case 1003:                   /* xterm any event tracking */
             term->xterm_mouse_mode = state ? MM_ANY_EVENT : MM_NONE;
-            win_set_raw_mouse_mode(term->win, state);
+            set_raw_mouse_mode(term->frontend, state);
             break;
           case 1005:                   /* use XTERM 1005 mouse protocol */
             term->xterm_mouse_protocol = state ? MP_XTERM : MP_NORMAL;
@@ -6238,9 +6238,9 @@ void term_mouse(Terminal *term, Mouse_Button braw, Mouse_Button bcooked,
 {
     pos selpoint;
     termline *ldata;
-    bool raw_mouse = (term->xterm_mouse_mode &&
+    int raw_mouse = (term->xterm_mouse_mode &&
 		     !term->no_mouse_rep &&
-		   et  !(term->mouse_override && shift));
+		     !(term->mouse_override && shift));
     int default_seltype;
 
     if (y < 0) {
@@ -6295,7 +6295,7 @@ void term_mouse(Terminal *term, Mouse_Button braw, Mouse_Button bcooked,
     if (raw_mouse &&
 	(term->selstate != ABOUT_TO) && (term->selstate != DRAGGING)) {
 	int encstate = 0, r, c;
-        bool wheel;
+        int wheel;
         char abuf[64];
         char m; /* SGR 1006's postfix character ('M' or 'm') */
         int l = 0;
@@ -6325,7 +6325,7 @@ void term_mouse(Terminal *term, Mouse_Button braw, Mouse_Button bcooked,
 		break;
               case MBT_NOTHING:        /* for any event tracking */
                 encstate = 0x03;
-                wheel = false;
+                wheel = FALSE;
                 break;
 	      default:
                 return;
